@@ -1,0 +1,67 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Инстаграмм";
+    Layout = "_Layout";
+}
+
+@{
+    await Html.RenderPartialAsync("ViewsPatrial/HeaderPatrail", Model);
+}
+@if (Model == null)
+{
+    <h2>Список подписок пуст</h2>
+}
+else
+{
+    <main class="main-container">
+        <section class="content-container">
+            <div class="posts">
+                @foreach (var follower in Model.Followers)
+                {
+                    @foreach (var publication in follower.Publications)
+                    {
+                        <article class="post">
+                            <div class="post__header">
+                                <div class="post__profile">
+                                    <a asp-action="UserIndex" asp-controller="Profile" asp-route-userId="@publication.UserId" target="_blank" class="post__avatar">
+                                        <img src="../../@publication.User.ImagePath" alt="User Picture">
+                                    </a>
+                                    <a asp-action="UserIndex" asp-controller="Profile" asp-route-userId="@publication.UserId" class="post__user">@publication.User.Name</a>
+                                </div>
+                                <button class="post__more-options">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="6.5" cy="11.5" r="1.5" fill="var(--text-dark)"></circle>
+                                        <circle cx="12" cy="11.5" r="1.5" fill="var(--text-dark)"></circle>
+                                        <circle cx="17.5" cy="11.5" r="1.5" fill="var(--text-dark)"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="post__content">
+                                <div class="post__medias">
+                                    <img class="post__media" src="../../@publication.ImagePath" alt="Post Content">
+                                </div>
+                            </div>
+                            <div class="post__footer">
+                               
+                                <div class="post__infos" id="post-infos-@publication.Id">
+                                  
+                                        @await Html.PartialAsync("ViewsPatrial/LikesPatrialView", publication);
+                                    
+                                </div>
+                            </div>
+                        </article>
+                    }
+                }
+            </div>
+        </section>
+    </main>
+}
+
+@section Scripts
+{
+    <script >
+        function sendLike(postId){
+             $("#post-infos-" + postId).load('@Url.Action("LikePublication", "Publication")?publicationId='+postId);
+        }
+    </script>
+}

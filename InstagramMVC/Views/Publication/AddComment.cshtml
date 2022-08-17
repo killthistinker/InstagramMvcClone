@@ -1,0 +1,62 @@
+@model AddCommentViewModel
+
+@{
+    ViewBag.Title = "Подробная информация";
+    Layout = "_Layout";
+}
+
+@{
+    await Html.RenderPartialAsync("ViewsPatrial/HeaderPatrail", Model.Publication.User);
+}
+
+@if (Model == null)
+{
+    <h2>Публикация не найдена</h2>
+}
+else
+{
+  <div class="container">
+    <article class="post">
+      <div class="post__header">
+        <div class="post__profile">
+          <a target="_blank" class="post__avatar">
+            <img src="../@Model.Publication.User.ImagePath" alt="User Picture">
+          </a>
+          <a asp-action="UserIndex" asp-route-userId="@Model.Publication.UserId" asp-controller="Profile" target="_blank" class="post__user">leocosta1</a>
+        </div>
+      </div>
+  
+      <div class="post__content">
+        <div class="post__medias">
+          <img class="post__media" src="../@Model.Publication.ImagePath" alt="Post Content">
+        </div>
+      </div>
+      <div class="post__footer">
+ 
+        <div class="post__infos" id="post-@Model.Publication.Id" >
+         
+            @await Html.PartialAsync("ViewsPatrial/LikesPatrialView", Model.Publication);
+          
+          </div>
+          <form asp-action="Comment" asp-controller="Publication" class="coment" method="post">
+            <textarea asp-for="Comment.UserComment" class="coment-text" placeholder="Добавьте коментарий..."></textarea>
+            <span asp-validation-for="Comment.UserComment"></span>
+            <input asp-for="Comment.PublicationId" value="@Model.Publication.Id" hidden>
+            <button class="coment-btn" type="submit">Опубликовать</button>
+          </form>
+      </div>
+    </article>
+  </div>
+}
+
+@section Scripts
+{
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
+  <script >
+    function sendLike(postId){
+               $("#post-" + postId).load('@Url.Action("LikePublication", "Publication")?publicationId='+postId);
+          }
+  </script>
+}

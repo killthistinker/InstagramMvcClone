@@ -1,0 +1,44 @@
+@model SearchUsersViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@{
+    await Html.RenderPartialAsync("ViewsPatrial/HeaderPatrail", Model.User);
+}
+
+@if (Model.Users.Count == 0)
+{
+    <main class="main-container">
+        <div class="container">
+            <section class="content-container">
+                <div class="content">
+                    <h2>Пользователи не найдены</h2>
+                </div>
+            </section>
+        </div>
+    </main>
+}
+else
+{
+    <main class="main-container">
+        <div class="container">
+            <section class="content-container">
+                <div class="content">
+                    <h2>Найденные пользователи</h2>
+                    @foreach (var user in Model.Users)
+                    {
+                        <div class="profile-box">
+                            <a class="profile-button__picture" asp-controller="Profile" asp-action="UserIndex" asp-route-userId="@user.Id">
+                                <img src="../../@user.ImagePath" alt="User Picture">
+                            </a>
+                            <p class="user-info">@user.Name</p>
+                        </div>
+                    }
+                </div>
+            </section>
+        </div>
+    </main>
+}

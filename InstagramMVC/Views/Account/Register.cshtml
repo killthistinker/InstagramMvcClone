@@ -1,0 +1,53 @@
+@model RegisterViewModel
+
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "_LayoutRegister";
+}
+
+<h2 class="registration-title">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</h2>
+<form asp-action="Register" asp-controller="Account" class="registration-form" asp-antiforgery="true" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly"></div>
+    <input asp-for="Email" class="registration-input" type="text" placeholder="Email адрес">
+    <span class="validation text-danger" asp-validation-for="Email"></span>
+    <input asp-for="UserName" class="registration-input" type="text" placeholder="Логин">
+    <span class="validation text-danger" asp-validation-for="UserName"></span>
+    <input asp-for="Password" class="registration-input" type="password" placeholder="Пароль">
+    <span class="validation text-danger"asp-validation-for="Password"></span>
+    <input asp-for="PasswordConfirm" class="registration-input" type="password" placeholder="Подтверждение пароля">
+    <span class="validation text-danger" asp-validation-for="PasswordConfirm"></span>
+    <input asp-for="Name" class="registration-input" type="text" placeholder="Имя и фамилия">
+    <input asp-for="Gender" class="registration-input" type="text" placeholder="Введите ваш пол">
+    <input asp-for="PhoneNumber" class="registration-input" type="text" placeholder="Введите ваш номер телефона">
+    <textarea asp-for="UserInfo" class="registration-input" type="text" placeholder="информация о себе"></textarea>
+    <div class="input-wrapper pt-1">
+        <input asp-for="File" type="file" name="file" id="input-file" class="input input-file" multiple>
+        <label class="file-button" for="input-file">Загрузите аватар</label>
+        <span asp-validation-for="File" class="text-danger"></span>
+    </div>
+    <div class="registration-politic">
+        <p class="subtitle">
+            Люди, которые пользуются нашим сервисом, могли загрузить вашу контактную информацию в
+            Instagram.
+        </p>
+        <p class="subtitle">
+            Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
+            отношении файлов
+            cookie.
+        </p>
+    </div>
+    <button class="registration-button" type="submit">Регистрация</button>
+</form>
+<div class="registration-footer">
+    <p class="have-account">Есть аккаунт?</p>
+    <a asp-action="LogIn" class="sign-in">Вход</a>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

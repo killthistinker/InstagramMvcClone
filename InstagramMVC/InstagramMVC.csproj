@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\images" />
+      <Folder Include="wwwroot\images\userImages" />
+      <Folder Include="wwwroot\images\userPublications" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\images\userImages\killthistinker@gmail.com\11111111111.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userImages\maks@gmail.com\11111111111.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userImages\xxxx@gmail.com\11111111111.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userImages\maks@gmail.com\Screenshot_4.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userImages\maks@gmail.com\Screenshot_8.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userImages\maks@gmail.com\Screenshot_6.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\killthistinker\NmBteoTiskK.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\killthistinker\Screenshot_3.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\killthistinker\Screenshot_4.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\maks\11111111111.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\maks\NmBteoTiskK.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\maks\Screenshot_3.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\maks\Screenshot_5.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\maks\Screenshot_6.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\maks\Screenshot_8.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\killthistinker\11111111111.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\killthistinker\Screenshot_6.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\killthistinker\Screenshot_7.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userPublications\maks\Screenshot_4.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\images\userImages\maks@gmail.com\Screenshot_3.png" />
+    </ItemGroup>
+
+</Project>

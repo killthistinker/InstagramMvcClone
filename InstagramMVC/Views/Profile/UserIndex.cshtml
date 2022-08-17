@@ -1,0 +1,83 @@
+@model User
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@{
+    await Html.RenderPartialAsync("ViewsPatrial/HeaderPatrail", Model);
+}
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="container">
+            <div class="profile  mt-5">
+                <div class="profile-image">
+                    <img class="avatar" src="../../@Model.ImagePath" alt="аватар">
+                </div>
+                <div class="profile-user-settings user-menu">
+                    <h1 class="profile-user-name">@Model.UserName</h1>
+                    @if (Model.Subscribers.Any(u => u.UserName == User.Identity.Name))
+                    {
+                        <button id="subscribe-button" class="btn btn-primary">Отписаться</button>
+                        <input id="subscribe" value="@Model.Id" hidden>
+                    }
+                    else
+                    {
+                        <button id="subscribe-button" class="btn btn-primary">Подписаться</button>
+                        <input id="subscribe" value="@Model.Id" hidden>
+                    }
+
+                </div>
+                <div class="profile-stats">
+                    @{
+                        await Html.RenderPartialAsync("ViewsPatrial/SubscribePatrialView", Model);
+                    }
+                </div>
+                <div class="profile-bio">
+                    <p>
+                        <span class="profile-real-name">@Model.Name</span> @Model.UserInfo
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="gallery">
+                @if (Model.Publications != null)
+                {
+                    foreach (var publication in Model.Publications)
+                    {
+                        <div class="gallery-item" tabindex="0">
+                            <img src="../../@publication.ImagePath" class="gallery-image" alt="">
+                            @await Html.PartialAsync("ViewsPatrial/ProfileLikePatrialView", publication);
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+@section Scripts
+{
+    <script >
+        $(document).ready(function (){
+            $("#subscribe-button").click(function (event){
+                event.preventDefault();
+                var state = document.getElementById("subscribe-button");
+                if (state.innerHTML === "Подписаться"){
+                    state.innerHTML = "Отписаться"
+                }
+                else{
+                     state.innerHTML = "Подписаться"
+                }
+                 var postKey = $("#subscribe").val();
+                 $(".profile-stats").load('@Url.Action("Subscribe", "Profile")?userId='+postKey);      
+            });
+        }) ;
+          function sendProfileLike(postId){
+            $("#gallery-item-info-" + postId).load('@Url.Action("LikeProfilePublication", "Publication")?publicationId='+postId);
+         }
+    </script>
+}

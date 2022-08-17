@@ -1,0 +1,122 @@
+@model PublicationViewModel
+
+@{
+    ViewBag.Title = "Профиль";
+    Layout = "_Layout";
+}
+
+@{
+    await Html.RenderPartialAsync("ViewsPatrial/HeaderPatrail", Model.User);
+}
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="container">
+            <div class="profile  mt-5">
+                <div class="profile-image">
+                    <img class="avatar" src="../../@Model.User.ImagePath" alt="аватар">
+                </div>
+                <div class="profile-user-settings">
+                    <h1 class="profile-user-name">@Model.User.UserName</h1>
+                    <button class="btn profile-edit-btn">Редактировать профиль</button>
+                </div>
+                <div class="profile-user-actions">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                       Добавить публикацию
+                     </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                       <div class="modal-dialog">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <h5 class="modal-title" id="exampleModalLabel">Добавить публикацию</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                             </button>
+                           </div>
+                             <div class="modal-body">
+                                 <form class="publication-form" asp-action="Publication" method="post" enctype="multipart/form-data">
+                                     <input asp-for="File" type="file" name="file" id="input-file" class="input input-file" multiple placeholder="Добавить картинку">
+                                     <label class="file-button" for="input-file">Добавить картинку</label>
+                                     <span asp-validation-for="File" class="text-danger"></span>
+                                     <textarea asp-for="Description" class="registration-input" type="text" placeholder="Введите описание публикации"></textarea>
+                                     <span class="validation text-danger" asp-validation-for="Description"></span>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+                                         <button class="btn btn-primary" type="submit">Добавить публикацию</button>
+                                     </div>
+                                 </form>
+                             </div>
+                         </div>
+                       </div>
+                     </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form method="post" asp-controller="Account" asp-action="LogOff">
+                            <input class="btn btn-primary" type="submit" value="Выйти">
+                        </form>
+                    }
+                </div>
+                    <div class="profile-stats">
+                        <ul>
+                            <li><span class="profile-stat-count">@Model.User.Publications.Count</span> публикации</li>
+                            <li><span class="profile-stat-count">@Model.User.Subscribers.Count</span> подписчики</li>
+                            <li><span class="profile-stat-count">@Model.User.Followers.Count</span> подписки</li>
+                        </ul>
+                    </div>
+                    <div class="profile-bio">
+                        <p>
+                            <span class="profile-real-name">@Model.User.Name</span> @Model.User.UserInfo
+                        </p>
+                    </div>
+                </div>
+        </div>
+        <div class="container">
+            <div class="gallery">
+               @await Html.PartialAsync("ViewsPatrial/PublicationsPartialViewModel", Model.User.Publications)
+            </div>
+        </div>
+    </main>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script >
+            $(document).ready(function (){
+                $("#like-button").click(function (event){
+                    event.preventDefault();
+                     var postKey = $("#like-publication").val();
+                     $(".post__likes").load('@Url.Action("LikePublication", "Publication")?publicationId='+postKey);
+                });
+            });
+               function publication(publicationId){
+                  $("#gallery-item-" + publicationId).load('@Url.Action("Delete", "Publication")?publicationId='+publicationId)
+                   console.log(publicationId);
+               }
+             function sendProfileLike(postId){
+                $("#gallery-item-info-" + postId).load('@Url.Action("LikeProfilePublication", "Publication")?publicationId='+postId)
+               
+             } 
+             function editPublication(publicationId, publicationDescription){
+                   console.log(publicationId)
+                   console.log(publicationDescription)
+                   $('#edit-text').val(publicationDescription); 
+                   console.log($("#edit-text").val())
+                    $(".dm-overlay").css('display', 'block');
+                   $("#get-edit").on("click", function (e){
+                       e.preventDefault();
+                       publicationDescription = $('#edit-text').val();
+                      console.log(publicationDescription)
+                      $("#gallery-item-" + publicationId).load('@Url.Action("Edit", "Publication")?publicationId='+publicationId+"&description="+publicationDescription);
+                      $(".dm-overlay").css('display', 'none');
+                   })
+             }
+                
+               $("#close-edit").on("click", function (event){
+                    $(".dm-overlay").css('display', 'none');
+               })
+        </script>
+}
+
+

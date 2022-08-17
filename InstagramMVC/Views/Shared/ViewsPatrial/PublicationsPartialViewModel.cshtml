@@ -1,0 +1,31 @@
+@model List<Publication>
+@if (Model != null)
+{
+    foreach (var publication in Model)
+    {
+        <div class="gallery-item" id="gallery-item-@publication.Id" tabindex="0">
+            <img  src="../../@publication.ImagePath" class="gallery-image"  alt="image">
+            @await Html.PartialAsync("ViewsPatrial/ProfileLikePatrialView", publication);
+            <a class="btn-delete btn-danger" onclick="publication('@publication.Id')"> Удалить</a>
+            <button class="edit-description btn-primary" onclick="editPublication('@publication.Id', '@publication.Description')"> Редактировать</button>
+            <input type="text" hidden id="edit-@publication.Id" value="@publication.Description">
+        </div>
+    }
+    <div class="dm-overlay" id="win1">
+        <div class="dm-table">
+            <div class="dm-cell">
+                <div class="dm-modal">
+                    <a href="#close" class="close"></a>
+                    <h3>Редактирование публикации</h3>
+                    <textarea id="edit-text" value=""></textarea>
+                    <button id="close-edit" class="btn btn-primary">Закрыть</button>
+                     <button id="get-edit" class="btn btn-primary">Редактировать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

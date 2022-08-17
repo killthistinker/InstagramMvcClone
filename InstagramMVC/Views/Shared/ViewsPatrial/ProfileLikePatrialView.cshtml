@@ -1,0 +1,15 @@
+@model Publication
+
+<div class="gallery-item-info" id="gallery-item-info-@Model.Id">
+    <ul>
+        <a onclick="sendProfileLike('@Model.Id')" class="gallery-item-likes">
+            <span class="visually-hidden">Likes: </span>
+          
+             @Model.Likes.Count 
+        </a>
+        <a asp-action="AddComment" asp-controller="Publication" asp-route-publicationId="@Model.Id" class="gallery-item-comments">
+            <span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> @Model.Comments.Count
+        </a>
+        <a class="gallery-item-likes" asp-action="AddComment" asp-controller="Publication" asp-route-publicationId="@Model.Id">Подробнее</a>
+    </ul>
+</div>

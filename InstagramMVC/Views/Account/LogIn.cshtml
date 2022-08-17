@@ -1,0 +1,18 @@
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_LayoutRegister";
+}
+<form asp-action="LogIn" asp-controller="Account" class="authorization-form" asp-antiforgery="true" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <input asp-for="Email" class="registration-input" type="text" placeholder="Email адрес">
+    <span class="validation text-danger" asp-validation-for="Email"></span>
+    <input asp-for="Password" class="registration-input" type="password" placeholder="Пароль">
+    <span class="validation text-danger"asp-validation-for="Password"></span>
+    <button class="registration-button" type="submit">Войти</button>
+</form>
+<div class="registration-footer">
+    <p class="have-account">Нет аккаунта?</p>
+    <a asp-action="Register" asp-controller="Account" class="sign-in">Регистрация</a>
+</div>
